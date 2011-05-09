@@ -9,11 +9,6 @@
 "  for MS-DOS and Win32:  $VIM\_vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
-
 " Use Vim settings, rather than Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
@@ -21,19 +16,12 @@ set nocompatible
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
 set history=100
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
+set ruler			" show the cursor position all the time
+set showcmd			" display incomplete commands
 set incsearch		" do incremental searching
 set hidden
 let mapleader = ","
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -84,8 +72,8 @@ if has("autocmd")
 
 else
 
-  set autoindent		" always set autoindenting on
-  set smartindent
+  "set autoindent		" always set autoindenting on
+  "set smartindent
 
 endif " has("autocmd")
 
@@ -97,21 +85,24 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-set tabstop=3
+set tabstop=4
+set shiftwidth=4
 set showmatch
 
 map <C-J> <C-W>j<C-W>_
 map <C-K> <C-W>k<C-W>_
 map <C-L> <C-W>l
 map <C-H> <C-W>h
+
 set wmh=0
+set noea
 
 set autoread
 set incsearch
 
-set gfn=Inconsolata:h13
+set gfn=Inconsolata:h14
 set shell=/bin/bash
-colorscheme ir_black
+colorscheme molokai
 set anti
 set guioptions-=T
 
@@ -142,8 +133,9 @@ function! Push(message)
 endfunction
 set cursorcolumn
 set cursorline
-set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+set statusline=%f%m[%L][%{&ff}]%y[%p%%][%04l,%04v]
 
+map <Space> za:w
 set foldenable " Turn on folding
 set foldmarker={,} " Fold C style code (only use this as default 
 set foldmethod=marker " Fold on the marker
