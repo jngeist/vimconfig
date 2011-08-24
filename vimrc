@@ -1,299 +1,349 @@
+" vim:fdm=indent
+
 "SETTINGS AND VARIABLES
 "======================
 "
+"Plugin Variables
+    let g:NERDTreeBookmarksFile = $HOME . "/.vim/NERDTreeBookmarks"
+    let g:NERDTreeShowBookmarks = 1
+    let g:tagbar_left = 1
+    let g:tagbar_autoshowtag = 1
+    let g:lucius_style='blue'
+    let g:liquidcarbon_high_contrast = 1
+    let g:indent_guides_enable_on_vim_startup = 1
+    let g:LustyJugglerSuppressRubyWarning = 1
+    let g:pyflakes_use_quickfix = 0
+
+    let VIMPRESS = [{'username':'jngeist',
+                     \ 'blog_url':'http://jnicholasgeist.wordpress.com'
+                     \},
+                     \{'username':'jngeist',
+                     \ 'blog_url':'http://www.coswritingcenter.org'
+                     \}]
+
 "Load Pathogen
-filetype off
-call pathogen#runtime_append_all_bundles() 
-call pathogen#helptags() 
-filetype plugin indent on
+    filetype off
+    call pathogen#runtime_append_all_bundles() 
+    call pathogen#helptags() 
+    filetype plugin indent on
 
-"No vi compatible mode.
-set nocompatible
-
-" iPAD-SPECIFIC
-" =============
-
-if &term != "xterm-ipad"
-	let g:session_autosave = 1  " session.vim: save session on exit.
-	let g:session_autoload = 1  " session.vim: load session on open.
-else
-	set t_Co=256				" sets terminal colors to 256 (vim reports 8 for some reason.)
-endif
-
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-
-set spelllang=en_us
-
-set backupdir=~/.vimbackup " By default, vim creates backups for every file edited, so you get your project littered w/ filename.ext~ files.  This puts them all in a hidden .backup directory.
-set directory=/tmp " Ditto filename.ext.swp files; necessary for vim to work right, but you don't want them cluttering up your project directory.
-
-set history=100		" command history = 100
-set ruler			" show the cursor position all the time
-set showcmd			" display incomplete commands
-set incsearch		" do incremental searching
-set ignorecase		" ignore case in searching, unless
-set smartcase		" search string includes uppercase characters
-set hidden			" allows for hidden buttons
-
-set tabstop=4		" with of tab char = 4
-set softtabstop=4
-set shiftwidth=4	" width of indent w/ >: 4
-set expandtab		
-set showmatch		" highlight matching bracket/parent/etc
-
-set number
-set textwidth=79
-set colorcolumn=-1
-
-"  STATUSLINE
-"  ==========
-
-set statusline=%{StatuslineMagicFlags()}
-set statusline+=%f       "tail of the filename
-set statusline+=%h      "help file flag
-set statusline+=%y      "filetype
-set statusline+=%r      "read only flag
-
-" display current git branch
-set statusline+=%{fugitive#statusline()}
-
-"display a warning if &paste is set
-set statusline+=%#error#
-set statusline+=%{&paste?'[paste]':''}
-set statusline+=%*
-
-set statusline+=%=      "left/right separator
-set statusline+=%-4{StatuslineCurrentHighlight()}
-set statusline+=%c\|     "cursor column
-set statusline+=%l/%L   "cursor line/total lines
-set statusline+=\ (%P)    "percent through file
-set laststatus=2        " Always show status line
-
-" return the syntax highlight group under the cursor ''
-function! StatuslineCurrentHighlight()
-    let name = synIDattr(synID(line('.'),col('.'),1),'name')
-    if name == ''
-        return ''
-    else
-        return '[' . name . ']'
-    endif
-endfunction
-
-function! StatuslineMagicFlags()
-    if &mod == 1
-       return '[+] '
-    else
-       return '     '
-    endif
-endfunction
-
-autocmd! BufNew * setlocal cursorline
-autocmd BufNew * setlocal cursorcolumn
-autocmd! WinEnter * setlocal cursorline
-autocmd WinEnter * setlocal cursorcolumn
-autocmd! WinLeave * setlocal nocursorline
-autocmd WinLeave * setlocal nocursorcolumn
-
-let mapleader = ","  "Leader key mapped to , .  (Leader is basically a custom meta key, so you can define commands to <Leader><Whatever>
-imap jj <Esc>
-nmap oo :put =''<CR> 
-nmap OO :put! =''<CR>
-nmap // :noh<CR>
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
-map <C-H> <C-W>h
-nmap <CR> <C-]>
-
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
-
-nnoremap <tab> %
-vnoremap <tab> %
-nnoremap j gj
-nnoremap k gk
-map <Leader>r :RainbowParenthesesToggle<CR>
-map <Leader>n :NERDTree<CR>
-map <Leader>t :TagbarToggle<CR>
-map <Leader><CR> i<CR><ESC>
-
-set wmh=0			" allows one-line window height
-set noea			" doesn't resize all windows on split.
-
-set autoread		" reload files that have changed in filesystem but not in vim
-
-if (hostname() == "mysphyt-ihac")
-	set gfn=Inconsolata:h17
-else
-	set gfn=Inconsolata:h13
-endif
-
-set shell=/bin/bash
-let g:tagbar_left = 1
-let g:tagbar_autoshowtag = 1
-let g:lucius_style='dark'
-let g:liquidcarbon_high_contrast = 1
-colorscheme liquidcarbon
-set anti			" font antialiasing
-set guioptions-=T	" disable toolbar in gui
-
-set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
-set clipboard+=unnamed
-
-" Spacebar opens folds.
-map <Space> za
-map <Space><Space> zA
-set foldenable " Turn on folding
-set foldmarker={,} " Fold C style code (only use this as default 
-set foldmethod=marker " Fold on the marker
-set foldlevel=100 " Don't autofold anything (but I can still 
-set foldopen=block,hor,mark,percent,quickfix,tag " what movements
-function! SimpleFoldText() " 
-	return getline(v:foldstart).' '
-endfunction " }
-set foldtext=SimpleFoldText() " Custom fold text function 
-
-set wrapmargin=2
-set linebreak
-let &showbreak='└─► '
-
-map <leader>p  <Esc>:%!json_xs -f json -t json-pretty<CR>
-
-" PLUGIN SETTINGS
-" ===============
-map <Leader><Tab> :LustyJuggler<CR>
-map <Leader>l :TlistToggle<CR>
-
-let VIMPRESS = [{'username':'jngeist',
-                 \ 'blog_url':'http://jnicholasgeist.wordpress.com'
-                 \},
-                 \{'username':'jngeist',
-                 \ 'blog_url':'http://www.coswritingcenter.org'
-                 \}]
-let g:indent_guides_enable_on_vim_startup = 1
-
-set enc=utf-8
-
-" CONDITIONAL SETTINGS
-" ====================
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-	set mouse=a
-endif
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
+"Basic vim settings
+    "Enable syntax highlighting
 	syntax on
-	set hlsearch
-endif
-if &t_Co > 2
-    let &t_Co = 256
-endif
+    set nocompatible "No vi compatible mode.
+    set backupdir=~/.vimbackup " By default, vim creates backups for every file
+        " edited, so you get your project littered w/ filename.ext~ files.  This puts
+        " them all in a hidden .backup directory.
+    set directory=/tmp " Ditto filename.ext.swp files; necessary for vim to
+        " work right, but you don't want them cluttering up your project directory.
+    set history=100		" command history = 100
+    set showcmd			" display incomplete commands
+    set hidden			" allows for hidden buffers
+    set number
+    set textwidth=80
+    set wrapmargin=2
+    set linebreak
+    let &showbreak='└─► '
+    set enc=utf-8
+    set listchars=trail:.,tab:>-,eol:$
+    set nolist
+    set anti			" font antialiasing
+    set guioptions-=T	" disable toolbar in gui
+    set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
+    set clipboard+=unnamed
+    set wmh=0			" allows one-line window height
+    set noea			" doesn't resize all windows on split.
+    set autoread		" reload files that have changed in filesystem but not in vim
+    set gfn=Monaco:h12
+    set modeline
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
+    set shell=/bin/bash
+    colorscheme blackboard
 
-	" Enable file type detection.
-	" Use the default filetype settings, so that mail gets 'tw' set to 72,
-	" 'cindent' is on in C files, etc.
-	" Also load indent files, to automatically do language-dependent indenting.
-	filetype plugin indent on
+"Editing Settings
+    set backspace=indent,eol,start "allow backspacing over everything in insert mode
+    set spelllang=en_us "spelling in English
+    " Tabs
+    set tabstop=4		" with of tab char = 4
+    set softtabstop=4
+    set shiftwidth=4	" width of indent w/ >: 4
+    set expandtab		
+    set showmatch		" highlight matching bracket/parent/etc
+    set incsearch		" do incremental searching
+    set ignorecase		" ignore case in searching, unless
+    set smartcase		" search string includes uppercase characters
 
-	" Put these in an autocmd group, so that we can delete them easily.
-	augroup vimrcEx
-		au!
+" Statusline
+    set statusline=%{StatuslineMagicFlags()}
+    set statusline+=%f       "tail of the filename
+    set statusline+=%h      "help file flag
+    set statusline+=%y      "filetype
+    set statusline+=%r      "read only flag
 
-		" For all text files set 'textwidth' to 78 characters.
-		autocmd FileType text setlocal textwidth=78
+    " display current git branch
+    set statusline+=%{fugitive#statusline()}
 
-		" When editing a file, always jump to the last known cursor position.
-		" Don't do it when the position is invalid or when inside an event handler
-		" (happens when dropping a file on gvim).
-		" Also don't do it when the mark is in the first line, that is the default
-		" position when opening a file.
-		autocmd BufReadPost *
-					\ if line("'\"") > 1 && line("'\"") <= line("$") |
-					\   exe "normal! g`\"" |
-					\ endif
+    "display a warning if &paste is set
+    set statusline+=%#error#
+    set statusline+=%{&paste?'[paste]':''}
+    set statusline+=%*
 
-	augroup END
+    set statusline+=%=      "left/right separator
+    set statusline+=%-4{StatuslineCurrentHighlight()}
+    set statusline+=\ L:%l/%L   "cursor line/total lines
+    set statusline+=\ (%P)    "percent through file
+    set laststatus=2        " Always show status line
 
-else
+    " Statusline Function: Display Highlight Group
+        function! StatuslineCurrentHighlight()
+            let name = synIDattr(synID(line('.'),col('.'),1),'name')
+            if name == ''
+                return ''
+            else
+                return '[' . name . ']'
+            endif
+        endfunction
 
-endif " has("autocmd")
+        function! StatuslineMagicFlags()
+            if &mod == 1
+               return '[+] '
+            else
+               return '     '
+            endif
+        endfunction
 
-" FUNCTIONS AND MISCELLANEOUS
-" ===========================
+" Folding
 
-" Invisible characters *********************************************************
-set listchars=trail:.,tab:>-,eol:$
-set nolist
-:noremap <Leader>i :set list!<CR> " Toggle invisible chars
+    " Spacebar opens folds.
+    map <Space> za
+    map <Space><Space> zA
 
-" Omni Completion *************************************************************
-autocmd FileType html :set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType c set omnifunc=ccomplete#Complete
+    set foldenable " Turn on folding
+    set foldmarker={,} " Fold C style code (only use this as default 
+    set foldmethod=marker " Fold on the marker
+    set foldlevel=100 " Don't autofold anything (but I can still 
+    set foldopen=block,hor,mark,percent,quickfix,tag " what movements
+    set foldcolumn=4
+    "Folding function: text for fold headers
+    function! SimpleFoldText() " 
+    	return getline(v:foldstart).' '
+    endfunction " }
+    set foldtext=SimpleFoldText() " Custom fold text function 
 
-" au FocusLost * :wa  " Doesn't work well, bc tries to save buffers wo filenames.
+" Mappings
+    let mapleader = ","  "Leader key mapped to , .  (Leader is basically a custom meta key, so you can define commands to <Leader><Whatever>
+    " Toggle invisible chars
+    noremap <Leader>i :set list!<CR> 
+    imap jj <Esc>
+    nmap oo :put =''<CR> 
+    nmap OO :put! =''<CR>
+    nmap // :noh<CR>
+    map <C-J> <C-W>j
+    map <C-K> <C-W>k
+    map <C-L> <C-W>l
+    map <C-H> <C-W>h
+    map H ^
+    map L $
+    map Y y$
 
-if !exists(":Push")
-	command -nargs=1 Push call Push(<args>)
-endif
+    nmap <Leader>yf :let @* = expand("%:p")<CR>
+    nmap <Leader>yh :silent redir @*><CR>:silent! %!/usr/local/bin/multimarkdown<CR>:silent redir END<CR>:echo "HTML yanked."<CR>
+    nmap <Leader>gh :%!/usr/local/bin/multimarkdown<CR>
+    nmap <CR> <C-]>
 
-function! Push(message)
-	exec "!git commit -a -m \"" . a:message . "\""
-	!git push
-endfunction
+    nmap <silent> <leader>ev :e $MYVIMRC<CR>
+    nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-if !exists(":Color")
-	command Color colorscheme liquidcarbon
-endif
+    nnoremap <tab> %
+    vnoremap <tab> %
+    nnoremap j gj
+    nnoremap k gk
+    map Q gq
+    map <Leader><CR> i<CR><ESC>k$
 
-if !exists(":Invis")
-	command Invis colorscheme invis
-endif
+    map <Leader>rp :RainbowParenthesesToggle<CR>
+    map <Leader>nt :NERDTreeToggle<CR>
+    map <Leader>l :TagbarToggle<CR>
+    map <Leader>. :call AddNote()<CR>
+    map <Leader><tab> :LustyJuggler<CR>
+    noremap <Leader>t :CommandT<CR>
+    map <Leader>cd :lcd `dirname '%:p'`<CR>
+    map <Leader>gd :set ft=htmldjango<CR>
+    map <Leader>gm :set ft=mmd<CR>
+    map <Leader>gi :call InvisModeToggle()<CR>
+    map <Leader>gf :call FocusModeToggle()<CR>
 
-if !exists(":Focus")
-	command Focus colorscheme focus
-endif
+" Terminal Settings
+" ====================
+    " Use mouse
+    if has('mouse')
+    	set mouse=a
+    endif
 
-if !exists(":Wcdb")
-	command Wcdb lcd ~/Documents/wcdb_hub/
-endif
+    " Up colors for teminal emulators
+    if &t_Co > 2
+        let &t_Co = 256
+    endif
 
-command! Prose call ProseMode()
-command! NoProse call ProseModeOff()
+    " Turn off cursor marking for non-gui clients
+    if has("gui_running") == 0
+        set nocursorline
+        set nocursorcolumn
+    endif
 
-function! ProseMode()
-	map <buffer> iii :Invis<CR>
-	map <buffer> fff :Focus<CR>
-	map <buffer> ccc :Color<CR>
-	imap <buffer> iii <ESC>:Invis<CR>
-	imap <buffer> fff <ESC>:Focus<CR>
-	imap <buffer> ccc <ESC>:Color<CR>
-	setl textwidth=78
-	setl formatoptions+=w
-	:normal gggqG
-endfunction
+    syntax on
 
-function! ProseModeOff()
-	:Color
-	unmap <buffer> iii
-	unmap <buffer> fff
-	unmap <buffer> ccc
-	iunmap <buffer> iii
-	iunmap <buffer> fff
-	iunmap <buffer> ccc
-	setl formatoptions-=w
-	setl textwidth=0
-endfunction
+" Autocommands
+    " When editing a file, always jump to the last known cursor position.
+    " Don't do it when the position is invalid or when inside an event handler
+    " (happens when dropping a file on gvim).
+    " Also don't do it when the mark is in the first line, that is the default
+    " position when opening a file.
+    autocmd BufReadPost *
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \   exe "normal! g`\"" |
+                \ endif
 
-noh " I don’t know why, but sourcing this highlights the last search. This should undo.
+    au BufEnter *.mmd map <leader>mp :silent ! open -a Marked.app "%:p"<CR>
+    au BufWritePre *.mmd call UpdateWordCount()
+    au BufWritePost *.mmd let v:statusmsg = WordCount()
+    au BufEnter *.mmd setlocal spell
+    au InsertLeave *.mmd exe "colors " . g:colors_name
+
+    " Omni Completion
+        autocmd FileType html :set omnifunc=htmlcomplete#CompleteTags
+        autocmd FileType python set omnifunc=pythoncomplete#Complete
+        autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+        autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+        autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+        autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+        autocmd FileType c set omnifunc=ccomplete#Complete
+
+" Various functions
+    function! WordCount()
+        normal mcgg
+        let firstblank = search('^$')
+        if firstblank
+            if search('[^ ]\+',  "nW")
+                exe "silent " . firstblank . ",$s/[^ ]\\+//gn"
+                let wordcount = str2nr(split(v:statusmsg)[0])
+            else
+                let wordcount = 0
+            endif
+        else
+            let wordcount = 0
+        endif
+        normal `c
+        return wordcount
+    endfunction
+
+    function! UpdateWordCount()
+        let wordcount = WordCount()
+        normal mcgg
+        let countline = search('^Word Count\s*:', 'w')
+        if countline
+            exe countline . "," . countline . "s/\\d\\+$/" . wordcount . "/"
+        endif
+        normal `c
+    endfunction
+
+    function! Push(message)
+    	exec "!git commit -a -m \"" . a:message . "\""
+    	!git push
+    endfunction
+
+    command! -nargs=1 Push call Push(<args>)
+
+    function! AddNote()
+        silent normal ma"byi]
+        if search("^[" . getreg("b") . "\\]:\\s\\+" . getreg("*"), "n")
+            echo "Marker " . getreg("b") . " already exists for " . getreg("*")
+        elseif search("^[" . getreg("b") . "\\]:", "n")
+            echo "Marker " . getreg("b") . " is a duplicate.  Please choose another."
+        else
+            let action = "\<C-R>*\<ESC>`a"
+            let startchar = strpart(getreg("b"), 0, 1)
+            if startchar == "^"
+                let tag = "FOOTNOTES"
+                let action = ''
+            elseif startchar == "#"
+                let tag = "SOURCES"
+            else
+                let tag = "LINKS"
+            endif
+            if ! search("<!--" . tag . "-->")
+                exe "silent normal Go\<CR><!--" . tag . "-->\<ESC>"
+                exe "silent normal A\<CR>\<CR><!--END" . tag . "-->\<ESC>kk"
+            endif
+            exe "silent normal A\<CR>\<CR>[\<C-R>b]: " . action
+            if action == ''
+                echo "`a to return to marker."
+            else
+                echo getreg("*") . " added to " . tag . " as [" . getreg("b") . "]."
+            endif
+        endif
+    endfunction
+
+    function! GetColors()
+        redir => hiline
+        silent hi normal
+        redir END
+        let bgcolor = substitute(hiline, ".*guibg=\\(\\S*\\).*", "\\1", "")
+        let fgcolor = substitute(hiline, ".*guifg=\\(\\S*\\).*", "\\1", "")
+        let cbgcolor = substitute(hiline, ".*ctermbg=\\(\\S*\\).*", "\\1", "")
+        let cfgcolor = substitute(hiline, ".*ctermfg=\\(\\S*\\).*", "\\1", "")
+        redir => cline
+        silent hi CursorLine
+        redir END
+        let clcolor = substitute(cline, ".*guibg=\\(\\S*\\).*", "\\1", "")
+        let cclcolor = substitute(cline, ".*ctermbg=\\(\\S*\\).*", "\\1", "")
+
+
+        return {'bgcolor': bgcolor, 'fgcolor': fgcolor, 'cbgcolor': cbgcolor, 'cfgcolor': cfgcolor, 'clcolor': clcolor, 'cclcolor': cclcolor}
+    endfunction
+
+    function! FocusModeToggle()
+        silent exe "colorscheme " . g:colors_name
+        if exists("b:prosemode") && b:prosemode == "focus"
+            let b:prosemode = "none"
+        else
+            let b:prosemode = "focus"
+            let colors = GetColors()
+            if has("gui_running") == 0
+                exe "hi Normal ctermfg=" . colors["cbgcolor"]
+                exe "hi CursorLine ctermfg=" . colors["cfgcolor"] . " ctermbg=" . colors["cclcolor"]
+                setlocal cursorline
+            else
+                exe "hi Normal guifg=" .  colors["bgcolor"]
+                exe "hi CursorLine guibg=" . colors["clcolor"] . " guifg=" . colors["fgcolor"]
+                setlocal cursorline
+            endif
+        endif
+    endfunction
+
+    function! InvisModeToggle()
+        silent exe "colorscheme " . g:colors_name
+        if exists("b:prosemode") && b:prosemode == "invis"
+            let b:prosemode = "none"
+        else
+            let colors = GetColors()
+            if has("gui_running") == 0
+                " Hack - black bc I can't get this working right.
+                exe "hi Normal ctermfg=" .  colors["cclcolor"]
+                exe "hi CursorLine ctermfg=" . colors["cfgcolor"] . " ctermbg=" . colors["cfgcolor"]
+
+                setlocal cursorline
+            else
+                exe "hi Normal guifg=" .  colors["bgcolor"]
+                exe "hi CursorLine guifg=" . colors["clcolor"] . " guibg=" .  colors["clcolor"]
+                setlocal cursorline
+            endif
+            let b:prosemode = "invis"
+        endif
+    endfunction
+
+" Start in Docs dir
+    cd ~/Dropbox/Documents/
+
+" Stuff to sort through:
+    "map <leader>p  <Esc>:%!json_xs -f json -t json-pretty<CR>

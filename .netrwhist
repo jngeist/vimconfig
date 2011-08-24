@@ -1,10 +1,4 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =8
-let g:netrw_dirhist_1='/Users/mysphyt/Documents/wcdb_hub'
-let g:netrw_dirhist_2='/Users/joshuag/Documents/wcdb_hub'
-let g:netrw_dirhist_3='/Users/mysphyt/Documents/wcdb_hub'
-let g:netrw_dirhist_4='/Applications/MacVim.app/Contents/Resources/vim/runtime/doc'
-let g:netrw_dirhist_5='/Users/mysphyt/Documents'
-let g:netrw_dirhist_6='/Applications/MacVim.app/Contents/Resources/vim/runtime/doc'
-let g:netrw_dirhist_7='/Users/joshuag/Desktop/killscreen'
-let g:netrw_dirhist_8='/Users/mysphyt/Dropbox/Documents/CoS/Classes/E360/portfolio_database'
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/Users/mysphyt/Dropbox/wcdb_django'
+let g:netrw_dirhist_2='/Users/joshuag/.pentadactyl'
