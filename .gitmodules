@@ -61,3 +61,36 @@
 [submodule "bundle/vim-css-color"]
 	path = bundle/vim-css-color
 	url = https://github.com/skammer/vim-css-color.git
+[submodule "bundle/vim-jsbeautify"]
+	path = bundle/vim-jsbeautify
+	url = https://github.com/vim-scripts/jsbeautify.git
+[submodule "bundle/vim-json"]
+	path = bundle/vim-json
+	url = https://github.com/vim-scripts/JSON.vim.git
+[submodule "bundle/vim-matchit"]
+	path = bundle/vim-matchit
+	url = https://github.com/mhz/vim-matchit.git
+[submodule "bundle/vim-obvious"]
+	path = bundle/vim-obvious
+	url = https://github.com/vim-scripts/Obvious-Mode.git
+[submodule "bundle/vim-rainbow"]
+	path = bundle/vim-rainbow
+	url = https://github.com/vim-scripts/Rainbow-Parenthsis-Bundle.git
+[submodule "bundle/vim-jpythonfold"]
+	path = bundle/vim-jpythonfold
+	url = https://github.com/vim-scripts/jpythonfold.vim.git
+[submodule "bundle/pep8"]
+	path = bundle/pep8
+	url = https://github.com/vim-scripts/pep8.git
+[submodule "bundle/ropevim"]
+	path = bundle/ropevim
+	url = https://github.com/sontek/rope-vim.git
+[submodule "bundle/pydoc"]
+	path = bundle/pydoc
+	url = https://github.com/fs111/pydoc.vim.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = https://github.com/ervandew/supertab.git
+[submodule "bundle/vim-lusty"]
+	path = bundle/vim-lusty
+	url = https://github.com/sjbach/lusty.git
