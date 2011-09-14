@@ -1,11 +1,11 @@
 
-mmd-utils /Users/mysphyt/Dropbox/multimarkdown
-cw /Users/mysphyt/Dropbox/Documents/Creative Writing
-ks /Users/mysphyt/Dropbox/Documents/Creative Writing/Nonfiction/KS Website Pieces
-latex /Users/mysphyt/Dropbox/TexMF/tex/latex/mmd/personal
-cos /Users/mysphyt/Dropbox/Documents/CoS
-mmd-snippets /Users/mysphyt/.vim/bundle/snipmate.vim/snippets/mmd.snippets
-notation /Users/mysphyt/Dropbox/Notation
-olc /Users/mysphyt/Dropbox/Documents/CoS/Online Certification
-vim /Users/mysphyt/.vim
-wcdb_django /Users/mysphyt/Dropbox/wcdb_django
+mmd-utils $HOME/Dropbox/multimarkdown
+cw $HOME/Dropbox/Documents/Creative Writing
+ks $HOME/Dropbox/Documents/Creative Writing/Nonfiction/KS Website Pieces
+latex $HOME/Dropbox/TexMF/tex/latex/mmd/personal
+cos $HOME/Dropbox/Documents/CoS
+mmd-snippets $HOME/.vim/bundle/snipmate.vim/snippets/mmd.snippets
+notation $HOME/Dropbox/Notation
+olc $HOME/Dropbox/Documents/CoS/Online Certification
+vim $HOME/.vim
+wcdb_django $HOME/Dropbox/wcdb_django

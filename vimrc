@@ -13,6 +13,7 @@
     let g:indent_guides_enable_on_vim_startup = 1
     let g:LustyJugglerSuppressRubyWarning = 1
     let g:pyflakes_use_quickfix = 0
+    let g:solarized_hitrail = 1
 
     let VIMPRESS = [{'username':'jngeist',
                      \ 'blog_url':'http://jnicholasgeist.wordpress.com'
@@ -20,6 +21,8 @@
                      \{'username':'jngeist',
                      \ 'blog_url':'http://www.coswritingcenter.org'
                      \}]
+" Clear Autocommands
+    au!
 
 "Load Pathogen
     filetype off
@@ -30,6 +33,7 @@
 "Basic vim settings
     "Enable syntax highlighting
 	syntax on
+    set background=dark
     set nocompatible "No vi compatible mode.
     set backupdir=~/.vimbackup " By default, vim creates backups for every file
         " edited, so you get your project littered w/ filename.ext~ files.  This puts
@@ -43,22 +47,22 @@
     set textwidth=80
     set wrapmargin=2
     set linebreak
-    let &showbreak='└─► '
+    let &showbreak='└─'
     set enc=utf-8
     set listchars=trail:.,tab:>-,eol:$
     set nolist
     set anti			" font antialiasing
-    set guioptions-=T	" disable toolbar in gui
+    set guioptions=egmLt
     set sessionoptions=blank,buffers,curdir,folds,help,resize,tabpages,winsize
     set clipboard+=unnamed
     set wmh=0			" allows one-line window height
     set noea			" doesn't resize all windows on split.
     set autoread		" reload files that have changed in filesystem but not in vim
-    set gfn=Monaco:h12
+    set gfn=Monaco:h10
     set modeline
 
     set shell=/bin/bash
-    colorscheme blackboard
+    colorscheme solarized
 
 "Editing Settings
     set backspace=indent,eol,start "allow backspacing over everything in insert mode
@@ -147,8 +151,6 @@
     map Y y$
 
     nmap <Leader>yf :let @* = expand("%:p")<CR>
-    nmap <Leader>yh :silent redir @*><CR>:silent! %!/usr/local/bin/multimarkdown<CR>:silent redir END<CR>:echo "HTML yanked."<CR>
-    nmap <Leader>gh :%!/usr/local/bin/multimarkdown<CR>
     nmap <CR> <C-]>
 
     nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -172,6 +174,7 @@
     map <Leader>gm :set ft=mmd<CR>
     map <Leader>gi :call InvisModeToggle()<CR>
     map <Leader>gf :call FocusModeToggle()<CR>
+
 
 " Terminal Settings
 " ====================
@@ -204,11 +207,21 @@
                 \   exe "normal! g`\"" |
                 \ endif
 
-    au BufEnter *.mmd map <leader>mp :silent ! open -a Marked.app "%:p"<CR>
+    au FileType mmd map <leader>mp :silent ! open -a Marked.app "%:p"<CR>
+    au FileType mmd map <leader>op :silent ! mmd.sh -p "%:p"<CR>
+    au FileType mmd map <leader>ob :silent ! mmd.sh -b "%:p"<CR>
+    au FileType mmd nmap <Leader>yh :silent redir @*><CR>:silent! !/usr/local/bin/multimarkdown "%:p"<CR>:silent redir END<CR>:echo "HTML yanked."<CR>
+    au FileType mmd nmap <Leader>gh :%!/usr/local/bin/multimarkdown<CR>
+    au FileType mmd setlocal linespace=8
+    au FileType mmd setlocal spell
+
     au BufWritePre *.mmd call UpdateWordCount()
     au BufWritePost *.mmd let v:statusmsg = WordCount()
-    au BufEnter *.mmd setlocal spell
     au InsertLeave *.mmd exe "colors " . g:colors_name
+
+    au BufWritePost *.scss call SassDump()
+
+    au FileType python set fdm=indent
 
     " Omni Completion
         autocmd FileType html :set omnifunc=htmlcomplete#CompleteTags
@@ -242,8 +255,29 @@
         normal mcgg
         let countline = search('^Word Count\s*:', 'w')
         if countline
-            exe countline . "," . countline . "s/\\d\\+$/" . wordcount . "/"
+            exe countline . "," . countline . "s/\\d\\+ *$/" . wordcount . "/"
         endif
+        normal `c
+    endfunction
+
+    function! SassDump()
+        "silent call StripSassConstants()
+        if strpart(expand("%:t"), 0, 1) != "_"
+            silent! !sass --update "%:p"       
+            echo expand("%<") . ".scss updated."
+        endif
+    endfunction
+
+    function! StripSassConstants()
+        normal mcgg
+        let firstnonvar = search("^[^$]", "wn")
+        while line(".") < firstnonvar
+            let line = getline(line('.'))
+            let varname = substitute(line, "^\\(\\$\\w*\\):.*", "\\1", "")
+            let varval = substitute(line, "^.*:\\s*\\(.*\\);", "\\1", "")
+            exec firstnonvar . ",$s/" . varval . "/" . varname . "/ge"
+            normal j
+        endwhile
         normal `c
     endfunction
 
@@ -341,9 +375,6 @@
             let b:prosemode = "invis"
         endif
     endfunction
-
-" Start in Docs dir
-    cd ~/Dropbox/Documents/
 
 " Stuff to sort through:
     "map <leader>p  <Esc>:%!json_xs -f json -t json-pretty<CR>
