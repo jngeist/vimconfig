@@ -13,7 +13,6 @@
     let g:indent_guides_enable_on_vim_startup = 1
     let g:LustyJugglerSuppressRubyWarning = 1
     let g:pyflakes_use_quickfix = 0
-    let g:solarized_hitrail = 1
 
     let VIMPRESS = [{'username':'jngeist',
                      \ 'blog_url':'http://jnicholasgeist.wordpress.com'
@@ -35,7 +34,7 @@
 	syntax on
     set background=dark
     set nocompatible "No vi compatible mode.
-    set backupdir=~/.vimbackup " By default, vim creates backups for every file
+    set backupdir=~/.vim/backup " By default, vim creates backups for every file
         " edited, so you get your project littered w/ filename.ext~ files.  This puts
         " them all in a hidden .backup directory.
     set directory=/tmp " Ditto filename.ext.swp files; necessary for vim to
@@ -62,7 +61,6 @@
     set modeline
 
     set shell=/bin/bash
-    colorscheme solarized
 
 "Editing Settings
     set backspace=indent,eol,start "allow backspacing over everything in insert mode
@@ -186,6 +184,10 @@
     " Up colors for teminal emulators
     if &t_Co > 2
         let &t_Co = 256
+        colors molokai
+    else
+        let g:solarized_hitrail=1
+        colorscheme solarized
     endif
 
     " Turn off cursor marking for non-gui clients
