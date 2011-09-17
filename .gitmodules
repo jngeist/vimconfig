@@ -45,7 +45,7 @@
 	url = https://github.com/plasticboy/vim-markdown.git
 [submodule "bundle/vim-multimarkdown"]
 	path = bundle/vim-multimarkdown
-	url = https://github.com/plasticboy/vim-markdown.git
+	url = git@github.com:jngeist/vim-multimarkdown.git
 [submodule "bundle/vim-session"]
 	path = bundle/vim-session
 	url = https://github.com/xolox/vim-session.git
