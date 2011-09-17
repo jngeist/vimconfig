@@ -57,7 +57,7 @@
     set wmh=0			" allows one-line window height
     set noea			" doesn't resize all windows on split.
     set autoread		" reload files that have changed in filesystem but not in vim
-    set gfn=Monaco:h10
+    set gfn=DejaVuSansMono:h10
     set modeline
 
     set shell=/bin/bash
