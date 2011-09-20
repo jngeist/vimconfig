@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_cnt =4
 let g:netrw_dirhist_1='/Users/mysphyt/Dropbox/wcdb_django'
 let g:netrw_dirhist_2='/Users/joshuag/.pentadactyl'
 let g:netrw_dirhist_3='/Users/jngeist/Dropbox/Geek About Town'
+let g:netrw_dirhist_4='/Users/jngeist/Dropbox/wcdb_django'

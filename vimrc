@@ -4,7 +4,6 @@
 "======================
 "
 "Plugin Variables
-    let g:NERDTreeBookmarksFile = $HOME . "/.vim/NERDTreeBookmarks"
     let g:NERDTreeShowBookmarks = 1
     let g:tagbar_left = 1
     let g:tagbar_autoshowtag = 1
@@ -14,12 +13,20 @@
     let g:LustyJugglerSuppressRubyWarning = 1
     let g:pyflakes_use_quickfix = 0
 
-    let VIMPRESS = [{'username':'jngeist',
-                     \ 'blog_url':'http://jnicholasgeist.wordpress.com'
-                     \},
-                     \{'username':'jngeist',
-                     \ 'blog_url':'http://www.coswritingcenter.org'
-                     \}]
+python << EOF
+import os.path, vim
+paths = {
+    "/home/jngeist": "a2ssh",
+    "/home/joshuag": "cossh",
+    "/Users/jngeist": "laptop",
+    "/Users/joshuag": "cos",
+    "/Users/mysphyt": "home",
+}
+home = vim.eval("$HOME")
+if home in paths:
+    vim.command("let g:NERDTreeBookmarksFile = '" + home + "/.vim/bookmarks/" + paths[home] + "_bookmarks'")
+EOF
+
 " Clear Autocommands
     au!
 
